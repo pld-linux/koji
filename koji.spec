@@ -8,8 +8,8 @@ Source0:	%{name}-%{version}.tar.bz2
 # Source0-md5:	22cc3917703906b92d009190101ca6d5
 URL:		http://hosted.fedoraproject.org/projects/koji
 BuildRequires:	python
-Requires:	pyOpenSSL
 Requires:	python-krbV >= 1.0.13
+Requires:	python-pyOpenSSL
 Requires:	python-rpm
 Requires:	python-urlgrabber
 BuildArch:	noarch
@@ -25,7 +25,7 @@ Group:		Applications/Networking
 Requires:	%{name} = %{version}-%{release}
 Requires:	apache-mod_python
 Requires:	webapps
-Requires:	python-postgresql
+Requires:	python-PyGreSQL
 
 %description hub
 koji-hub is the XMLRPC interface to the koji database
@@ -54,7 +54,7 @@ tasks that come through the Koji system.
 Summary:	Koji Utilities
 Group:		Applications/Networking
 Requires:	%{name} = %{version}-%{release}
-Requires:	python-postgresql
+Requires:	python-PyGreSQL
 
 %description utils
 Utilities for the Koji system
@@ -68,7 +68,7 @@ Requires:	apache-mod_python
 Requires:	webapps
 Requires:	python-cheetah
 Requires:	python-krbV >= 1.0.13
-Requires:	python-postgresql
+Requires:	python-PyGreSQL
 
 %description web
 koji-web is a web UI to the Koji system.
