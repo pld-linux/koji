@@ -24,7 +24,7 @@ Summary:	Koji XMLRPC interface
 Group:		Applications/Networking
 Requires:	%{name} = %{version}-%{release}
 Requires:	apache-mod_python
-Requires:	httpd
+Requires:	webapps
 Requires:	python-postgresql
 
 %description hub
@@ -65,7 +65,7 @@ Group:		Applications/Networking
 Requires:	%{name} = %{version}-%{release}
 Requires:	apache-mod_auth_kerb
 Requires:	apache-mod_python
-Requires:	httpd
+Requires:	webapps
 Requires:	python-cheetah
 Requires:	python-krbV >= 1.0.13
 Requires:	python-postgresql
@@ -80,7 +80,10 @@ koji-web is a web UI to the Koji system.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__make} DESTDIR=$RPM_BUILD_ROOT install
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
+
+mv $RPM_BUILD_ROOT%{_sysconfdir}/httpd/{conf.d,webapps.d}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -95,7 +98,7 @@ rm -rf $RPM_BUILD_ROOT
 %files hub
 %defattr(644,root,root,755)
 %{_datadir}/koji-hub
-%config(noreplace) %{_sysconfdir}/httpd/conf.d/kojihub.conf
+%config(noreplace) %{_sysconfdir}/httpd/webapps.d/kojihub.conf
 
 %files utils
 %defattr(644,root,root,755)
@@ -109,7 +112,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_datadir}/koji-web
 %{_sysconfdir}/kojiweb
-%config(noreplace) %{_sysconfdir}/httpd/conf.d/kojiweb.conf
+%config(noreplace) %{_sysconfdir}/httpd/webapps.d/kojiweb.conf
 
 %files builder
 %defattr(644,root,root,755)
@@ -121,7 +124,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(-,kojibuilder,kojibuilder) %{_sysconfdir}/mock/koji
 
 %pre builder
-%useradd -r -s /bin/bash -G mock -d /builddir -M kojibuilder 2>/dev/null ||:
+%useradd -u 55 -r -d /home/services/koji -s /bin/false -c "Koji builder" -g nobody kojibuilder
 
 %post builder
 /sbin/chkconfig --add kojid
