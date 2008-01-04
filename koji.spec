@@ -23,6 +23,7 @@ contains shared libraries and the command-line interface.
 Summary:	Koji XMLRPC interface
 Group:		Applications/Networking
 Requires:	%{name} = %{version}-%{release}
+Requires:	apache-mod_alias
 Requires:	apache-mod_python
 Requires:	webapps
 Requires:	python-PyGreSQL
