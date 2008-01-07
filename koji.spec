@@ -66,6 +66,7 @@ Group:		Applications/Networking
 Requires:	%{name} = %{version}-%{release}
 Requires:	apache-mod_auth_kerb
 Requires:	apache-mod_authz_host
+Requires:	apache-mod_mime
 Requires:	apache-mod_python
 Requires:	webapps
 Requires:	python-cheetah
