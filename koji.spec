@@ -15,18 +15,20 @@
 #   /usr/sbin/koji-shadow
 #   /usr/share/koji-builder/lib/tasks.py
 #   /usr/share/koji-builder/lib/tasks.pyc
+# - need pld packages:
+#   python-krbV, mocK
 Summary:	Build system tools
 Summary(pl.UTF-8):	Narzędzia systemu budującego
 Name:		koji
 Version:	1.4.0
-Release:	0.1
+Release:	0.2
 License:	LGPL v2 and GPL v2+
 Group:		Applications/System
 Source0:	https://fedorahosted.org/releases/k/o/koji/%{name}-%{version}.tar.bz2
 # Source0-md5:	182584f02660cd574714f55fe49333a3
 URL:		http://fedorahosted.org/koji
 BuildRequires:	python
-Requires:	python-krbV >= 1.0.13
+#Requires:	python-krbV >= 1.0.13
 Requires:	python-pyOpenSSL
 Requires:	python-rpm
 Requires:	python-urlgrabber
@@ -71,7 +73,7 @@ Requires:	/usr/bin/cvs
 Requires:	/usr/bin/git
 Requires:	/usr/bin/svn
 Requires:	createrepo >= 0.4.11
-Requires:	mock >= 0.9.14
+#Requires:	mock >= 0.9.14
 Requires:	rpm-build
 
 %description builder
@@ -106,7 +108,7 @@ Requires:	apache-mod_mime
 Requires:	apache-mod_python
 Requires:	python-PyGreSQL
 Requires:	python-cheetah
-Requires:	python-krbV >= 1.0.13
+#Requires:	python-krbV >= 1.0.13
 Requires:	webapps
 
 %description web
