@@ -1,13 +1,30 @@
+# TODO
+# - package real webapp
+# - unpackaged:
+#   /etc/koji-gc/koji-gc.conf
+#   /etc/koji-hub/hub.conf
+#   /etc/koji-hub/plugins/messagebus.conf
+#   /etc/koji-shadow/koji-shadow.conf
+#   /usr/lib/koji-hub-plugins/echo.py
+#   /usr/lib/koji-hub-plugins/echo.pyc
+#   /usr/lib/koji-hub-plugins/messagebus.py
+#   /usr/lib/koji-hub-plugins/messagebus.pyc
+#   /usr/libexec/koji-hub/rpmdiff
+#   /usr/libexec/kojid/mergerepos
+#   /usr/sbin/koji-gc
+#   /usr/sbin/koji-shadow
+#   /usr/share/koji-builder/lib/tasks.py
+#   /usr/share/koji-builder/lib/tasks.pyc
 Summary:	Build system tools
 Summary(pl.UTF-8):	Narzędzia systemu budującego
 Name:		koji
-Version:	1.2.3
+Version:	1.4.0
 Release:	0.1
-License:	LGPL v2.1
+License:	LGPL v2 and GPL v2+
 Group:		Applications/System
-Source0:	%{name}-%{version}.tar.bz2
-# Source0-md5:	22cc3917703906b92d009190101ca6d5
-URL:		http://hosted.fedoraproject.org/projects/koji
+Source0:	https://fedorahosted.org/releases/k/o/koji/%{name}-%{version}.tar.bz2
+# Source0-md5:	182584f02660cd574714f55fe49333a3
+URL:		http://fedorahosted.org/koji
 BuildRequires:	python
 Requires:	python-krbV >= 1.0.13
 Requires:	python-pyOpenSSL
@@ -31,8 +48,8 @@ Group:		Applications/Networking
 Requires:	%{name} = %{version}-%{release}
 Requires:	apache-mod_alias
 Requires:	apache-mod_python
-Requires:	webapps
 Requires:	python-PyGreSQL
+Requires:	webapps
 
 %description hub
 koji-hub is the XMLRPC interface to the Koji database.
@@ -54,7 +71,7 @@ Requires:	/usr/bin/cvs
 Requires:	/usr/bin/git
 Requires:	/usr/bin/svn
 Requires:	createrepo >= 0.4.11
-Requires:	mock >= 0.8.7
+Requires:	mock >= 0.9.14
 Requires:	rpm-build
 
 %description builder
@@ -87,10 +104,10 @@ Requires:	apache-mod_auth_kerb
 Requires:	apache-mod_authz_host
 Requires:	apache-mod_mime
 Requires:	apache-mod_python
-Requires:	webapps
+Requires:	python-PyGreSQL
 Requires:	python-cheetah
 Requires:	python-krbV >= 1.0.13
-Requires:	python-PyGreSQL
+Requires:	webapps
 
 %description web
 koji-web is a Web UI to the Koji system.
@@ -108,12 +125,14 @@ rm -rf $RPM_BUILD_ROOT
 
 mv $RPM_BUILD_ROOT%{_sysconfdir}/httpd/{conf.d,webapps.d}
 
+install -d $RPM_BUILD_ROOT%{py_sitescriptdir}/%{name}
+mv $RPM_BUILD_ROOT{%{_prefix}/lib/python2.7/site-packages/koji,%{py_sitescriptdir}/%{name}}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %pre builder
-# TODO: don't use 55 (reserved for xdm)
-%useradd -u 55 -r -d /home/services/koji -s /bin/false -c "Koji builder" -g nobody kojibuilder
+%useradd -u 221 -r -d /home/services/koji -s /bin/sh -c "Koji builder" -g nobody kojibuilder
 
 %post builder
 /sbin/chkconfig --add kojid
@@ -139,7 +158,7 @@ fi
 %defattr(644,root,root,755)
 %doc docs Authors COPYING
 %attr(755,root,root) %{_bindir}/*
-%{py_sitedir}/%{name}
+%{py_sitescriptdir}/%{name}
 %config(noreplace) %{_sysconfdir}/koji.conf
 
 %files hub
@@ -152,13 +171,13 @@ fi
 %attr(755,root,root) %{_sbindir}/kojira
 %attr(754,root,root) /etc/rc.d/init.d/kojira
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/kojira
-%{_sysconfdir}/kojira
+%dir %{_sysconfdir}/kojira
 %config(noreplace) %{_sysconfdir}/kojira/kojira.conf
 
 %files web
 %defattr(644,root,root,755)
 %{_datadir}/koji-web
-%{_sysconfdir}/kojiweb
+%dir %{_sysconfdir}/kojiweb
 %config(noreplace) %{_sysconfdir}/httpd/webapps.d/kojiweb.conf
 
 %files builder
@@ -166,7 +185,7 @@ fi
 %attr(755,root,root) %{_sbindir}/kojid
 %attr(754,root,root) /etc/rc.d/init.d/kojid
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/kojid
-%{_sysconfdir}/kojid
+%dir %{_sysconfdir}/kojid
 %config(noreplace) %{_sysconfdir}/kojid/kojid.conf
 # TODO: kill -
 %attr(-,kojibuilder,kojibuilder) %{_sysconfdir}/mock/koji
