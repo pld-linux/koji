@@ -21,7 +21,7 @@ Summary:	Build system tools
 Summary(pl.UTF-8):	Narzędzia systemu budującego
 Name:		koji
 Version:	1.4.0
-Release:	0.2
+Release:	0.3
 License:	LGPL v2 and GPL v2+
 Group:		Applications/System
 Source0:	https://fedorahosted.org/releases/k/o/koji/%{name}-%{version}.tar.bz2
@@ -127,7 +127,7 @@ rm -rf $RPM_BUILD_ROOT
 
 mv $RPM_BUILD_ROOT%{_sysconfdir}/httpd/{conf.d,webapps.d}
 
-install -d $RPM_BUILD_ROOT%{py_sitescriptdir}/%{name}
+install -d $RPM_BUILD_ROOT%{py_sitescriptdir}
 mv $RPM_BUILD_ROOT{%{_prefix}/lib/python2.7/site-packages/koji,%{py_sitescriptdir}/%{name}}
 
 %clean
