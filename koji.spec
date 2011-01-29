@@ -28,6 +28,8 @@ Source0:	https://fedorahosted.org/releases/k/o/koji/%{name}-%{version}.tar.bz2
 # Source0-md5:	182584f02660cd574714f55fe49333a3
 URL:		http://fedorahosted.org/koji
 BuildRequires:	python
+BuildRequires:	python-modules
+BuildRequires:	rpm-pythonprov
 #Requires:	python-krbV >= 1.0.13
 Requires:	python-pyOpenSSL
 Requires:	python-rpm
