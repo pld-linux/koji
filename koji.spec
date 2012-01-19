@@ -20,12 +20,12 @@
 Summary:	Build system tools
 Summary(pl.UTF-8):	Narzędzia systemu budującego
 Name:		koji
-Version:	1.4.0
+Version:	1.6.0
 Release:	0.3
 License:	LGPL v2 and GPL v2+
 Group:		Applications/System
 Source0:	https://fedorahosted.org/releases/k/o/koji/%{name}-%{version}.tar.bz2
-# Source0-md5:	182584f02660cd574714f55fe49333a3
+# Source0-md5:	069e8229aa2b44698bbbbdea8d24aff4
 URL:		http://fedorahosted.org/koji
 BuildRequires:	python
 BuildRequires:	python-modules
