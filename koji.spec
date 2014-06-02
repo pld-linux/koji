@@ -7,7 +7,7 @@ Summary:	Build system tools
 Summary(pl.UTF-8):	Narzędzia systemu budującego
 Name:		koji
 Version:	1.9.0
-Release:	0.4
+Release:	0.5
 # koji.ssl libs (from plague) are GPLv2+
 License:	LGPL v2 and GPL v2+
 Group:		Applications/System
@@ -204,6 +204,7 @@ fi
 %files hub
 %defattr(644,root,root,755)
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd/webapps.d/kojihub.conf
+%dir %{_sysconfdir}/koji-hub
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/koji-hub/hub.conf
 %{_datadir}/koji-hub
 %dir %{_libexecdir}/koji-hub
