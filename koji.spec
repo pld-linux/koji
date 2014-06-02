@@ -7,13 +7,13 @@ Summary:	Build system tools
 Summary(pl.UTF-8):	Narzędzia systemu budującego
 Name:		koji
 Version:	1.9.0
-Release:	0.1
+Release:	0.3
 # koji.ssl libs (from plague) are GPLv2+
 License:	LGPL v2 and GPL v2+
 Group:		Applications/System
 Source0:	https://fedorahosted.org/releases/k/o/koji/%{name}-%{version}.tar.bz2
 # Source0-md5:	0ce900022f67324858551622f9f75c73
-URL:		http://fedorahosted.org/koji
+URL:		https://fedorahosted.org/koji/
 BuildRequires:	python
 BuildRequires:	python-modules
 BuildRequires:	rpm-pythonprov
@@ -43,7 +43,7 @@ Group:		Applications/Networking
 License:	LGPL v2 and GPL v2
 Requires:	%{name} = %{version}-%{release}
 Requires:	apache-mod_alias
-Requires:	apache-mod_python
+Requires:	apache-mod_wsgi
 Requires:	python-PyGreSQL
 Requires:	webapps
 
@@ -99,9 +99,9 @@ Requires(post):	/sbin/chkconfig
 Requires(post):	/sbin/service
 Requires(preun):	/sbin/chkconfig
 Requires(preun):	/sbin/service
-Requires:	/usr/bin/virt-clone
-Requires:	libvirt-python
-Requires:	libxml2-python
+Requires:	python-libvirt
+Requires:	python-libxml2
+Requires:	python-virtinst
 Requires:	qemu-img
 
 %description vm
