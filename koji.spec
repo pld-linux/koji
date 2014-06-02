@@ -7,7 +7,7 @@ Summary:	Build system tools
 Summary(pl.UTF-8):	Narzędzia systemu budującego
 Name:		koji
 Version:	1.9.0
-Release:	0.3
+Release:	0.4
 # koji.ssl libs (from plague) are GPLv2+
 License:	LGPL v2 and GPL v2+
 Group:		Applications/System
@@ -17,6 +17,7 @@ URL:		https://fedorahosted.org/koji/
 BuildRequires:	python
 BuildRequires:	python-modules
 BuildRequires:	rpm-pythonprov
+BuildRequires:	sed >= 4.0
 #Requires:	python-krbV >= 1.0.13
 Requires:	python-pyOpenSSL
 Requires:	python-rpm
@@ -24,8 +25,8 @@ Requires:	python-urlgrabber
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-# TODO: change to libdir
-%define		_libexecdir	%{_prefix}/libexec
+# TODO: change to libdir/datadir
+%define		_libexecdir	%{_prefix}/lib
 
 %description
 Koji is a system for building and tracking RPMS. The base package
@@ -146,6 +147,8 @@ koji-web to interfejs WWW do systemu Koji.
 %prep
 %setup -q
 
+grep -r /usr/libexec/ -l . | xargs sed -i -e 's,/usr/libexec/,/usr/lib/,g'
+
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__make} install \
@@ -154,7 +157,7 @@ rm -rf $RPM_BUILD_ROOT
 mv $RPM_BUILD_ROOT%{_sysconfdir}/httpd/{conf.d,webapps.d}
 
 install -d $RPM_BUILD_ROOT%{py_sitescriptdir}
-mv $RPM_BUILD_ROOT{%{_prefix}/lib/python2.7/site-packages/koji,%{py_sitescriptdir}/%{name}}
+mv $RPM_BUILD_ROOT{%{_prefix}/lib/python%{py_ver}/site-packages/koji,%{py_sitescriptdir}/%{name}}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
